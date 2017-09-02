@@ -1,5 +1,8 @@
 SSH Icon Change Log
 ===================
+1.02.
+  
+  - change the Location for the Icon without a Respring!
 
 1.0.1
 - Added support for iOS 7-8
