@@ -13,7 +13,7 @@ An iOS statusbar indicator for remote connections (iOS 7-10)
 
 ## Compatibility
 
-- Supports iOS 7/10
+- Supports iOS 7-10
 - Requires a jailbroken iPhone, iPad or iPod Touch
 - Requires libstatusbar or equivalent
 
