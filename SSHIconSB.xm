@@ -51,9 +51,41 @@ static void loadSettings() {
 
 static void handleSettingsChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
 	HBLogDebug(@"***** Got Notification: %@", name);
+
+
+	//hide the icon
+	
+	if (sshIconItem.visible) {
+
+			sshIconItem.visible = NO;
+	
+	}
+
+	// remove the Icon
+
+	sshIconItem = nil;
+
+	
 	loadSettings();
+
+	//reload the icon
+
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+
+
+		sshIconItem = [[%c(LSStatusBarItem) alloc] initWithIdentifier:@"com.sticktron.sshicon" alignment:alignment];
+
+		sshIconItem.customViewClass = @"SSHIconItemView";
+		
+		sshIconItem.visible = ([[SSHIconConnectionInfo sharedInstance] isConnected] && enabled);
+	
+		HBLogDebug(@"StatusBar item created >> %@", sshIconItem);
+
+		
+		});
 	
 	// force the UI to refresh so the new icon takes effect
+
 	sshIconItem.imageName = @"be kind!";
 	if (sshIconItem.visible) {
 		// reset the timer so the new interval takes effect

@@ -1,6 +1,16 @@
 ARCHS = armv7 arm64
 TARGET = iphone:clang:10.1:7
 
+#export THEOS_DEVICE_IP = ip4s
+#export THEOS_DEVICE_IP = ipad
+#export THEOS_DEVICE_IP = ip6
+#export THEOS_DEVICE_IP = ip7
+#export THEOS_DEVICE_IP = i4s
+export THEOS_DEVICE_IP= ip4 
+#export THEOS_DEVICE_IP = ip5s
+#export THEOS_DEVICE_IP = ip41
+#export THEOS_DEVICE_IP = ip5
+
 THEOS_BUILD_DIR = Build
 
 include $(THEOS)/makefiles/common.mk
