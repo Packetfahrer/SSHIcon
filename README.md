@@ -7,6 +7,7 @@ An iOS statusbar indicator for remote connections (iOS 7-10)
 [![GitHub Issues](https://img.shields.io/github/issues/sticktron/sshicon.svg)](https://github.com/sticktron/sshicon/issues)
 [![GitHub Release](https://img.shields.io/github/release/sticktron/sshicon.svg)](https://github.com/sticktron/sshicon/releases)
 
+[![GitHub Issues](https://img.shields.io/github/issues/Packetfahrer/sshicon.svg)](https://github.com/sticktron/sshicon/issues)
 [![GitHub Release](https://img.shields.io/github/release/Packetfahrer/sshicon.svg)](https://github.com/Packetfahrer/SSHIcon/releases)
 
 
