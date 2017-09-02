@@ -4,7 +4,9 @@ An iOS statusbar indicator for remote connections (iOS 9-10)
 ![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 ![Supported Versions](https://img.shields.io/badge/supports-iOS_9--10-lightgrey.svg)
 [![GitHub Issues](https://img.shields.io/github/issues/sticktron/sshicon.svg)](https://github.com/sticktron/sshicon/issues)
-[![GitHub Release](https://img.shields.io/github/release/sticktron/sshicon.svg)](https://github.com/sticktron/sshicon/releases)
+[![GitHub Release](https://img.shields.io/github/release/Packetfahrer/sshicon.svg)](https://github.com/Packetfahrer/SSHIcon/releases)
+
+
 
 ## Compatibility
 
