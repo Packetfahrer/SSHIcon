@@ -1,6 +1,10 @@
 SSH Icon Change Log
 ===================
-1.02.
+1.0.3
+
+  - forgott to remove something  
+
+1.0.2
   
   - change the Location for the Icon without a Respring!
 

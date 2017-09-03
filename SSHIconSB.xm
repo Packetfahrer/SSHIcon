@@ -53,6 +53,8 @@ static void handleSettingsChanged(CFNotificationCenterRef center, void *observer
 	HBLogDebug(@"***** Got Notification: %@", name);
 
 
+
+
 	//hide the icon
 	
 	if (sshIconItem.visible) {
@@ -68,31 +70,66 @@ static void handleSettingsChanged(CFNotificationCenterRef center, void *observer
 	
 	loadSettings();
 
+	SpringBoard *sb = (SpringBoard*)[UIApplication sharedApplication];
+
+	
+	if(!enabled) {
+
+	[sb _sshicon_stopUpdating];
+	
+	
+
+	} else {
+
+
+		[sb _sshicon_stopUpdating];
+		[sb _sshicon_startUpdating];
+	
+
+
+
+	}
+	
+
+	BOOL visible = ([[SSHIconConnectionInfo sharedInstance] isConnected] && enabled);
+
+	
+
 	//reload the icon
 
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
 
 
 		sshIconItem = [[%c(LSStatusBarItem) alloc] initWithIdentifier:@"com.sticktron.sshicon" alignment:alignment];
 
 		sshIconItem.customViewClass = @"SSHIconItemView";
-		
-		sshIconItem.visible = ([[SSHIconConnectionInfo sharedInstance] isConnected] && enabled);
+	
+		// force the UI to refresh so the new icon takes effect
+
+		sshIconItem.imageName = @"be kind!";
+
+		sshIconItem.visible = visible;
+
 	
 		HBLogDebug(@"StatusBar item created >> %@", sshIconItem);
 
 		
 		});
+
 	
+	/*
 	// force the UI to refresh so the new icon takes effect
 
 	sshIconItem.imageName = @"be kind!";
+	
+
 	if (sshIconItem.visible) {
 		// reset the timer so the new interval takes effect
 		SpringBoard *sb = (SpringBoard *)[UIApplication sharedApplication];
-		[sb _sshicon_stopUpdating];
-		[sb _sshicon_startUpdating];
+		//[sb _sshicon_stopUpdating];
+		//[sb _sshicon_startUpdating];
 	}
+	*/
 }
 
 /*
@@ -101,16 +138,27 @@ static void handleSettingsChanged(CFNotificationCenterRef center, void *observer
  */
 void registerForScreenBlankingNotifications() {
 	int notify_token;
+
 	notify_register_dispatch("com.apple.springboard.hasBlankedScreen", &notify_token, dispatch_get_main_queue(), ^(int token) {
+		
 		HBLogDebug(@"***** Got Notification >> com.apple.springboard.hasBlankedScreen");
 		
 		uint64_t state = UINT64_MAX;
 		notify_get_state(token, &state);
 		HBLogDebug(@"state = %llu", state);
-		if (state == 1) { // screen has turned off
+		if (state == 1) { 
+			// screen has turned off
 			[(SpringBoard *)[UIApplication sharedApplication] _sshicon_stopUpdating];
-		} else { // screen has turned on
+		
+		} else { 
+
+			// screen has turned on
+
+			if(enabled) {
+			
 			[(SpringBoard *)[UIApplication sharedApplication] _sshicon_startUpdating];
+		
+			}
 		}
 	});
 }
@@ -125,8 +173,16 @@ void registerForScreenBlankingNotifications() {
 	%log;
 	BOOL r = %orig;
 	
-	// start updating
-	[self _sshicon_startUpdating];
+	// start updating only if Enabled 
+	
+ 	[self _sshicon_stopUpdating];
+
+	
+	if (enabled) {
+
+	 [self _sshicon_startUpdating];
+	
+	}
 	
 	return r;
 }
@@ -188,8 +244,10 @@ void registerForScreenBlankingNotifications() {
 		
 		// quit if tweak is not enabled!
 		if (!enabled) {
-			HBLogDebug(@"disabled.");
-			return;
+		
+			HBLogDebug(@"disabled. but dont quit!");
+			//return;
+		
 		}
 		
 		// create statusbar item
